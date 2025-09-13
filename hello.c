@@ -1,0 +1,6 @@
+#include <stdio.h>
+#include <sttdlib.h>
+int main(){
+    printf("hello,world\n");
+    return 0;
+}
