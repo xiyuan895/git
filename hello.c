@@ -1,6 +1,18 @@
 #include <stdio.h>
-#include <sttdlib.h>
-int main(){
-    printf("hello,world\n");
-    return 0;
+#include <math.h>
+
+int main()
+{
+    int number;
+    printf("enter the number\n");
+    scanf("%d",&number);
+    if(number < 0)
+    {
+        printf("%i\n",(-1)*number);
+    }
+    else
+    {
+        printf("%i\n",number);
+    }
+
 }
