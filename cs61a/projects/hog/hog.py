@@ -231,7 +231,18 @@ def is_always_roll(strategy, goal=GOAL):
     False
     """
     # BEGIN PROBLEM 7
-    "*** YOUR CODE HERE ***"
+    player_score,opponent_score = 0,0
+    initial_roll = strategy(player_score,opponent_score)
+    while player_score <= goal:
+        while opponent_score <= goal:
+            current_roll = strategy(player_score,opponent_score)
+            if current_roll != initial_roll:
+                return False
+            opponent_score += 1
+        player_score += 1
+        opponent_score = 0
+    return True
+
     # END PROBLEM 7
 
 
@@ -248,7 +259,14 @@ def make_averaged(original_function, times_called=1000):
     """
 
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    def f(*args):
+        total,k = 0,1
+        while k <= times_called:
+            total += original_function(*args)
+            k += 1 
+        average = total/times_called
+        return average
+    return f
     # END PROBLEM 8
 
 
@@ -261,7 +279,15 @@ def max_scoring_num_rolls(dice=six_sided, times_called=1000):
     1
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    max,k,tag = 0,1,1
+    while k <= 10:
+        a = 0
+        a = make_averaged(roll_dice, times_called)(k,dice)
+        if a > max:
+            max = a
+            tag = k
+        k += 1
+    return tag
     # END PROBLEM 9
 
 
@@ -307,7 +333,11 @@ def boar_strategy(score, opponent_score, threshold=11, num_rolls=6):
     points, and returns NUM_ROLLS otherwise. Ignore the Sus Fuss rule.
     """
     # BEGIN PROBLEM 10
-    return num_rolls  # Remove this line once implemented.
+    a = boar_brawl(score, opponent_score)
+    if a >= threshold:
+        return 0
+    else:
+        return num_rolls
     # END PROBLEM 10
 
 
@@ -316,17 +346,27 @@ def sus_strategy(score, opponent_score, threshold=11, num_rolls=6):
     THRESHOLD points, and returns NUM_ROLLS otherwise. Consider both the Boar Brawl and
     Suss Fuss rules."""
     # BEGIN PROBLEM 11
-    return num_rolls  # Remove this line once implemented.
+    new_score = sus_points(simple_update(0, score, opponent_score))
+    add_score = new_score - score
+    if add_score >= threshold:
+        return 0
+    else:
+        return num_rolls  
     # END PROBLEM 11
 
 
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.
 
-    *** YOUR DESCRIPTION HERE ***
+    *** find上述策略当中的最大值 ***
     """
     # BEGIN PROBLEM 12
-    return 6  # Remove this line once implemented.
+    new_scorea = sus_points(simple_update(0, score, opponent_score))
+    new_scoreb = sus_points(simple_update(6, score, opponent_score))
+    if new_scorea > new_scoreb :
+        return 0
+    else:
+        return 6  
     # END PROBLEM 12
 
 
