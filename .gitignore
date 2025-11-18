@@ -1,0 +1,38 @@
+# Logs  
+logs  
+*.log  
+npm-debug.log*  
+yarn-debug.log*  
+yarn-error.log*  
+pnpm-debug.log*  
+lerna-debug.log*  
+  
+node_modules  
+dist  
+dist-ssr  
+*.local  
+  
+# Editor directories and files  
+.vscode/*  
+!.vscode/extensions.json  
+.idea  
+.DS_Store  
+*.suo  
+*.ntvs*  
+*.njsproj  
+*.sln  
+*.sw?  
+# 忽略所有 C 文件生成的可执行文件
+*.exe
+*.out
+*.o
+*.obj
+*.so
+*.a
+*.dll
+
+# 忽略没有扩展名的可执行文件
+a.out
+
+# 忽略 build 文件夹中的所有内容
+build/
