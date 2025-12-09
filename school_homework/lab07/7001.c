@@ -28,6 +28,9 @@ void show_records(const Record rec[], int count);
 int  play_game(void);
 int add_record(Record rec[], int *count, int ms);
 void wait_random_seconds(int min_s, int max_s);
+/* 清空内存记录并清空文件 */
+void clear_records(Record rec[], int *count);
+int  clear_score_file(void);
 
 int main(void)
 {
@@ -48,6 +51,7 @@ int main(void)
         printf("---------- Reaction Time Test ----------\n");
         printf("1. Start game\n");
         printf("2. Show records\n");
+        printf("3. Clear all records\n");
         printf("0. Quit\n");
         printf("Please choose: ");
 
@@ -92,6 +96,23 @@ int main(void)
         {
             // 5. 查看成绩列表
             show_records(records, count);
+        }
+        // 加入了清空数组的选项
+        else if (choice == 3)
+        {
+            printf("Are you sure to clear all records and truncate %s? (y/n): ", SCORE_FILE);
+            int ch = getchar();
+            clear_input_buffer();
+            if (ch == 'y' || ch == 'Y') {
+                if (clear_score_file() == 0) {
+                    clear_records(records, &count);
+                    printf("All records cleared (memory + %s).\n", SCORE_FILE);
+                } else {
+                    printf("Failed to clear %s.\n", SCORE_FILE);
+                }
+            } else {
+                printf("Clear canceled.\n");
+            }
         }
         else
         {
@@ -279,4 +300,31 @@ int add_record(Record rec[], int *count, int ms)
     fclose(f);
     (*count)++;
     return 1;
+}
+
+/* =========================================================
+   清空内存记录数组并重置计数
+   参数：
+     rec   - 记录数组（将被清零）
+     count - 指向当前记录数的指针（将被置 0）
+   返回：无
+   ========================================================= */
+void clear_records(Record rec[], int *count)
+{
+    if (!count) return;
+    *count = 0;
+    /* 可选地把数组内容清零，避免残留数据 */
+    memset(rec, 0, sizeof(Record) * MAX_RECORDS);
+}
+
+/* =========================================================
+   清空成绩文件 SCORE_FILE（截断为 0 字节）
+   返回：0 表示成功，-1 表示失败
+   ========================================================= */
+int clear_score_file(void)
+{
+    FILE *f = fopen(SCORE_FILE, "w"); /* "w" 会截断或创建文件 */
+    if (!f) return -1;
+    fclose(f);
+    return 0;
 }
