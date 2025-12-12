@@ -37,6 +37,24 @@ void sort_interest(int *interest, int n)
             }
         }
     }
+    // 选择排序
+    // int max = interest[0];
+    // int index = 0;
+    // for(int i = 0;i < n;i++)
+    // {
+    //     for(int j = i;j < n;j++)
+    //     {
+    //         if(interest[j] >= max)
+    //         {
+    //             max = interest[j];
+    //             index = j;
+    //         }
+    //     }
+    //     int temp = interest[i];
+    //     interest[i] = interest[index];
+    //     interest[index] = temp; 
+    // }
 }
+
 //在此处，我使用冒泡排序
 //老师还推荐了使用其他的选择排序和插入排序，课后实现
