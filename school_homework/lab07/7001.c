@@ -269,6 +269,8 @@ int add_record(Record rec[], int *count, int ms)
 {
     if (!count || *count >= MAX_RECORDS) return -1;
 
+    printf("Enter name (no spaces): ");
+    fflush(stdout);
     if (scanf("%19s", rec[*count].name) != 1) {
         clear_input_buffer();
         return -1;

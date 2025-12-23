@@ -3,7 +3,7 @@
 
 typedef struct student
 {
-    int average;
+    float average;
     int *score;
 }
 student;
@@ -22,7 +22,7 @@ int main()
     student a[student_num];
 
     for (int i = 0; i < student_num; i++) {
-        a[i].score = malloc(judger * sizeof(int));
+        a[i].score = malloc(judger * sizeof(int));//这里可以使用指针，方便进行定义
         if (!a[i].score) {
             for (int k = 0; k < i; k++) free(a[k].score);
             return 0;
@@ -37,7 +37,6 @@ int main()
             }
         }
     }
-
     calculate(a,student_num,judger);
     winner(a,student_num);
 }
@@ -47,8 +46,8 @@ void calculate(student a[],int asize,int scoresize)
     for(int i = 0;i < asize;i++)
     {
         int total = 0;
-        int max = 0;
-        int min = 0;
+        int max = a[i].score[0];//注意初始化
+        int min = a[i].score[0];
         for(int j = 0;j < scoresize;j++)
         {
             if (a[i].score[j] > max)
@@ -61,7 +60,7 @@ void calculate(student a[],int asize,int scoresize)
             }
             total += a[i].score[j];
         }
-        a[i].average = (total - max - min) / scoresize;
+        a[i].average = (float)(total - max - min) / (scoresize - 2);
     }
 }
 
@@ -75,5 +74,5 @@ void winner(student a[],int size)
             max = (float)a[i].average;
         }
     }
-    printf("%f",max);
+    printf("%.2f",max);
 }
